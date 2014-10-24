@@ -1,0 +1,16 @@
+{% extends 'layouts/application.html' %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+    <div class="container" style="max-width: 400px;">
+      <form method="POST" action="/forgot">
+        <h2>Forgot Password</h2>
+        <p>
+          <input type="text" name="email" class="form-control" placeholder="Email address" value="{{form.email}}" autofocus>
+        </p>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Reset Password</button>
+      </form>
+    </div>
+
+{% endblock %}

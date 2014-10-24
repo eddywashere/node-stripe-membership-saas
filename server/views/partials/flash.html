@@ -1,0 +1,34 @@
+<div class="container-fluid" style="max-width: 900px;">
+{% if error %}
+<div class="alert alert-danger" role="alert">
+  <p>{{error}}</p>
+</div>
+{% endif %}
+{% if messages.errors %}
+<div class="alert alert-danger" role="alert">
+  {% for error in messages.errors %}
+    {% if loop.first %}<ul>{% endif %}
+    <li>{{error.msg}}</li>
+    {% if loop.last %}</ul>{% endif %}
+  {% endfor %}
+</div>
+{% endif %}
+{% if messages.info %}
+<div class="alert alert-info" role="alert">
+  {% for info in messages.info %}
+    {% if loop.first %}<ul>{% endif %}
+    <li>{{info.msg}}</li>
+    {% if loop.last %}</ul>{% endif %}
+  {% endfor %}
+</div>
+{% endif %}
+{% if messages.success %}
+<div class="alert alert-success" role="alert">
+  {% for success in messages.success %}
+    {% if loop.first %}<ul>{% endif %}
+    <li>{{success.msg}}</li>
+    {% if loop.last %}</ul>{% endif %}
+  {% endfor %}
+</div>
+{% endif %}
+</div>

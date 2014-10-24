@@ -1,0 +1,19 @@
+{% extends 'layouts/application.html' %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+    <div class="container" style="max-width: 400px;">
+      <form action="/reset/{{token}}" method="POST">
+        <h2>Reset Password</h2>
+        <p>New Password
+          <input type="password" name="password" class="form-control" placeholder="New Password" autofocus>
+        </p>
+        <p>Confirm Password
+          <input type="password" name="confirm" class="form-control" placeholder="Confirm Password">
+        </p>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Change Password</button>
+      </form>
+    </div>
+
+{% endblock %}

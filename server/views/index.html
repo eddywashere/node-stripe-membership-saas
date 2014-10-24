@@ -1,0 +1,22 @@
+{% extends 'layouts/application.html' %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+  <div class="container" style="max-width: 400px;">
+    <h2>Home Page</h2>
+    <form accept-charset="UTF-8" action="/login" method="POST" role="form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input class="form-control" id="email" name="email" type="text" value="{{form.email}}" autofocus>
+      </div>
+      <div class="form-group">
+        <label for="user_password">Password</label>
+        <input type="password" name="password" class="form-control" placeholder="Password">
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+    <hr>
+    <p class="text-center"><a href="/signup">sign up here</a> or <a href="/forgot">forgot password?</a></p>
+  </div>
+{% endblock %}

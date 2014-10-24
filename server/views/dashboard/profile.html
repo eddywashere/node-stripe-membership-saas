@@ -1,0 +1,98 @@
+{% extends '../layouts/dashboard.html' %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+  <div class="container-fluid container-max">
+    <div class="page-header">
+      <h1>Home <small>/views/dashboard/index</small></h1>
+    </div>
+    {% include "../partials/flash.html" %}
+    <div class="page-header">
+      <h3>Profile</h3>
+    </div>
+    <form action="/user" method="POST" class="form-horizontal">
+      <div class="form-group">
+        <label for="email" class="col-sm-3 control-label">Email</label>
+        <div class="col-sm-4"><input type="email" name="email" id="email" value="{{user.email}}" class="form-control"></div>
+      </div>
+      <div class="form-group">
+        <label for="name" class="col-sm-3 control-label">Name</label>
+        <div class="col-sm-4"><input type="text" name="name" id="name" value="{{user.profile.name}}" class="form-control"></div>
+      </div>
+      <div class="form-group">
+        <label for="name" class="col-sm-3 control-label">Customer ID</label>
+        <div class="col-sm-4">
+          <div class="form-control-static">
+            {{user.stripe.customerId}}
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name" class="col-sm-3 control-label">Plan</label>
+        <div class="col-sm-4">
+          <p class="form-control-static">{{plans[user.stripe.plan].name}} - ${{plans[user.stripe.plan].price}}</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name" class="col-sm-3 control-label">Last 4</label>
+        <div class="col-sm-4">
+          <p class="form-control-static">{{user.stripe.last4}}</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="gender" class="col-sm-3 control-label">Gender</label>
+        <div class="col-sm-4">
+          <div class="radio">
+            <label>
+              <input type="radio" {% if user.profile.gender == 'male' %}checked{% endif %} name="gender" value="male" data-toggle="radio"><span>Male</span>
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" {% if user.profile.gender == 'female' %}checked{% endif %} name="gender" value="female" data-toggle="radio"><span>Female</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="location" class="col-sm-3 control-label">Location</label>
+        <div class="col-sm-4"><input type="text" name="location" id="location" value="{{user.profile.location}}" class="form-control"></div>
+      </div>
+      <div class="form-group">
+        <label for="website" class="col-sm-3 control-label">Website</label>
+        <div class="col-sm-4"><input type="text" name="website" id="website" value="{{user.profile.website}}" class="form-control"></div>
+      </div>
+      <div class="form-group">
+        <label for="gravatar" class="col-sm-3 control-label">Gravatar</label>
+        <div class="col-sm-4"><img src="{{user.gravatar()}}" width="100" height="100" class="profile"></div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-4"><button type="submit" class="btn btn-primary"><span class="ion-edit"></span>Update Profile</button></div>
+      </div>
+    </form>
+
+    <div class="page-header">
+      <h3>Password</h3>
+    </div>
+    <form action="/user/password" method="POST" class="form-horizontal">
+      <div class="form-group">
+        <label for="password" class="col-sm-3 control-label">New Password</label>
+        <div class="col-sm-4">
+          <input type="password" name="password" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="confirm" class="col-sm-3 control-label">Confirm Password</label>
+        <div class="col-sm-4">
+          <input type="password" name="confirm" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-4">
+          <button type="submit" class="btn btn-primary">Update Password</button>
+        </div>
+      </div>
+    </form>
+</div>
+{% endblock %}

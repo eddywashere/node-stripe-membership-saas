@@ -1,0 +1,14 @@
+{% extends 'layouts/application.html' %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+    <div class="container-fluid container-max">
+      <div class="page-header">
+        <h1>Not found <span>:(</span></h1>
+      </div>
+      {% if err %}
+      <pre><code>{{JSON.stringify(err,null,2)}}</code></pre>
+      {% endif %}
+    </div>
+{% endblock %}
