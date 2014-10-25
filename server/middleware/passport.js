@@ -28,6 +28,7 @@ module.exports = function(passport){
           }
           user.comparePassword(password, function(err, isMatch) {
             if (isMatch) {
+              req.session.cookie.expires = null;
               return done(null, user, req.flash('message', 'Successfully logged in.'));
             } else {
               return done(null, false, req.flash('error', 'Invalid Password'));

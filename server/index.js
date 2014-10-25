@@ -74,6 +74,9 @@ if(app.get('env') !== 'production'){
 app.use(session({
   resave: true,
   saveUninitialized: true,
+  cookie: {
+    maxAge: 60 * 1000 // 1 minute
+  },
   secret: secrets.sessionSecret,
   store: new MongoStore({
     url: secrets.db,

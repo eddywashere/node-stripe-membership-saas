@@ -25,6 +25,7 @@ exports.postLogin = function(req, res, next){
 
 exports.logout = function(req, res){
   req.logout();
+  req.session.cookie.expires = 60 * 1000; // 1 minute
   req.flash('message','Successfully logged out.');
   res.redirect(req.redirect.success);
 };
