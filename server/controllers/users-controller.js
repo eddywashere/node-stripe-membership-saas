@@ -150,13 +150,18 @@ exports.postPlan = function(req, res, next){
     if (err) return next(err);
 
     user.setPlan(plan, stripeToken, function (err) {
+      var msg;
+
       if (err) {
         if(err.code && err.code == 'card_declined'){
-          req.flash('errors', { msg: 'Your card was declined. Please provide a valid card.' });
-          return res.redirect(req.redirect.failure);
+          msg = 'Your card was declined. Please provide a valid card.';
+        } else if(err && err.message) {
+          msg = err.message;
+        } else {
+          msg = 'An unexpected error occurred.';
         }
 
-        req.flash('errors', { msg: 'An unexpected error occurred.' });
+        req.flash('errors', { msg:  msg});
         return res.redirect(req.redirect.failure);
       }
       req.flash('success', { msg: 'Plan has been updated.' });
