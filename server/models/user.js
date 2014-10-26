@@ -3,6 +3,7 @@ var bcrypt = require('bcrypt-nodejs');
 var crypto = require('crypto');
 var stripeCustomer = require('./plugins/stripe-customer');
 var secrets = require('../config/secrets');
+var timestamps = require('mongoose-timestamp');
 
 var userSchema = new mongoose.Schema({
   email: { type: String, unique: true, lowercase: true },
@@ -22,6 +23,7 @@ var userSchema = new mongoose.Schema({
 
 var stripeOptions = secrets.stripeOptions;
 
+userSchema.plugin(timestamps);
 userSchema.plugin(stripeCustomer, stripeOptions);
 
 /**
