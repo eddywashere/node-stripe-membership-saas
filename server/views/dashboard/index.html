@@ -7,7 +7,7 @@
     <div class="page-header">
       <h1>Home <small>/views/dashboard/index</small></h1>
     </div>
-
+    {% include "../partials/flash.html" %}
     {% if user.stripe.plan == 'free' %}
     <div class="panel panel-default">
       <div class="panel-heading">Free Plan</div>

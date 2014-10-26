@@ -185,6 +185,11 @@ exports.postToken = function(req, res, next){
 
           user.save(function(err) {
             if (err) return next(err);
+            var time = 14 * 24 * 3600000;
+            req.session.cookie.maxAge = time; //2 weeks
+            req.session.cookie.expires = new Date(Date.now() + time);
+            req.session.touch();
+
             req.logIn(user, function(err) {
               done(err, user);
             });

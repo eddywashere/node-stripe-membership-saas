@@ -28,8 +28,11 @@ module.exports = function(passport){
           }
           user.comparePassword(password, function(err, isMatch) {
             if (isMatch) {
-              req.session.cookie.expires = null;
-              return done(null, user, req.flash('message', 'Successfully logged in.'));
+              var time = 14 * 24 * 3600000;
+              req.session.cookie.maxAge = time; //2 weeks
+              req.session.cookie.expires = new Date(Date.now() + time);
+              req.session.touch();
+              return done(null, user, req.flash('success', 'Successfully logged in.'));
             } else {
               return done(null, false, req.flash('error', 'Invalid Password'));
             }
@@ -60,7 +63,11 @@ module.exports = function(passport){
 
           user.save(function(err) {
             if (err) return done(err, false, req.flash('error', 'Error saving user.'));
-            return done(null, user);
+            var time = 14 * 24 * 3600000;
+            req.session.cookie.maxAge = time; //2 weeks
+            req.session.cookie.expires = new Date(Date.now() + time);
+            req.session.touch();
+            return done(null, user, req.flash('success', 'Thanks for signing up!!'));
           });
         });
       };

@@ -8,7 +8,7 @@
 <div class="alert alert-danger" role="alert">
   {% for error in messages.errors %}
     {% if loop.first %}<ul>{% endif %}
-    <li>{{error.msg}}</li>
+    <li>{{error.msg || error}}</li>
     {% if loop.last %}</ul>{% endif %}
   {% endfor %}
 </div>
@@ -17,7 +17,7 @@
 <div class="alert alert-info" role="alert">
   {% for info in messages.info %}
     {% if loop.first %}<ul>{% endif %}
-    <li>{{info.msg}}</li>
+    <li>{{info.msg || info}}</li>
     {% if loop.last %}</ul>{% endif %}
   {% endfor %}
 </div>
@@ -26,7 +26,7 @@
 <div class="alert alert-success" role="alert">
   {% for success in messages.success %}
     {% if loop.first %}<ul>{% endif %}
-    <li>{{success.msg}}</li>
+    <li>{{success.msg || success}}</li>
     {% if loop.last %}</ul>{% endif %}
   {% endfor %}
 </div>

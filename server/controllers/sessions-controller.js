@@ -24,8 +24,12 @@ exports.postLogin = function(req, res, next){
 };
 
 exports.logout = function(req, res){
+  var time = 60 * 1000;
+
   req.logout();
-  req.session.cookie.expires = 60 * 1000; // 1 minute
+  req.session.cookie.maxAge = time;
+  req.session.cookie.expires = new Date(Date.now() + time);
+  req.session.touch();
   req.flash('message','Successfully logged out.');
   res.redirect(req.redirect.success);
 };
