@@ -30,6 +30,6 @@ exports.logout = function(req, res){
   req.session.cookie.maxAge = time;
   req.session.cookie.expires = new Date(Date.now() + time);
   req.session.touch();
-  req.flash('message','Successfully logged out.');
+  req.flash('success','Successfully logged out.');
   res.redirect(req.redirect.success);
 };
