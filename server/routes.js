@@ -1,10 +1,13 @@
 'use strict';
 
 // middleware
-var isAuthenticated = require('./middleware/auth').isAuthenticated,
+var StripeWebhook = require('stripe-webhook-middleware'),
+isAuthenticated = require('./middleware/auth').isAuthenticated,
 isUnauthenticated = require('./middleware/auth').isUnauthenticated,
 setRender = require('middleware-responder').setRender,
-setRedirect = require('middleware-responder').setRedirect;
+setRedirect = require('middleware-responder').setRedirect,
+stripeEvents = require('./middleware/stripe-events'),
+secrets = require('./config/secrets');
 // controllers
 var users = require('./controllers/users-controller'),
 main = require('./controllers/main-controller'),
@@ -12,6 +15,11 @@ dashboard = require('./controllers/dashboard-controller'),
 passwords = require('./controllers/passwords-controller'),
 registrations = require('./controllers/registrations-controller'),
 sessions = require('./controllers/sessions-controller');
+
+var stripeWebhook = new StripeWebhook({
+  stripeApiKey: secrets.stripeOptions.apiKey,
+  respond: true
+});
 
 module.exports = function (app, passport) {
 
@@ -102,4 +110,10 @@ module.exports = function (app, passport) {
     setRedirect({auth: '/', success: '/'}),
     isAuthenticated,
     users.deleteAccount);
+
+  // use this url to receive stripe webhook events
+  app.post('/stripe/events',
+    stripeWebhook.middleware,
+    stripeEvents
+  );
 };
