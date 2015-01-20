@@ -2,7 +2,7 @@
 
 This project is a boilerplate express app for creating a membership/subscription site with [Stripe](https://stripe.com), [Mailgun](https://mailgun.com/signup), mongodb and swig. Inspired by [sahat/hackathon-starter](https://github.com/sahat/hackathon-starter) and [RailsApps/rails-stripe-membership-saas](https://github.com/RailsApps/rails-stripe-membership-saas). It also handles stripe webhooks.
 
-Checkout the [demo](https://node-stripe-membership-saas.herokuapp.com/dashboard)!
+Check out the [demo](https://node-stripe-membership-saas.herokuapp.com/dashboard)!
 
 <a href="https://node-stripe-membership-saas.herokuapp.com/dashboard">
     <img src="https://a16545fb495c8760fb33-4cec33efbe2744e99ba863e52edb2075.ssl.cf2.rackcdn.com/stripe-membership-app-screenshot.png">
