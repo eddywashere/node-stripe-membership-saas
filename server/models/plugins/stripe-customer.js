@@ -40,7 +40,7 @@ module.exports = exports = function stripeCustomer (schema, options) {
       if (err) return cb(err);
 
       user.stripe.customerId = customer.id;
-      
+      return cb();
     });
   };
 
