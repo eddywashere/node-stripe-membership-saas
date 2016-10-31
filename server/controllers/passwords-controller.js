@@ -99,11 +99,8 @@ exports.postForgotPassword = function(req, res, next){
       });
     },
     function(token, user, done) {
-      var transporter = nodemailer.createTransport(
-        mailgunApiTransport({
-          apiKey: secrets.mailgun.password,
-          domain: secrets.mailgun.user
-        }));
+      var transporter = nodemailer.createTransport(mailgunApiTransport(secrets.mailgun));
+
       var mailOptions = {
         to: user.email,
         from: 'noreply@node-stripe-membership.herokuapp.com',
@@ -197,11 +194,8 @@ exports.postToken = function(req, res, next){
         });
     },
     function(user, done) {
-      var transporter = nodemailer.createTransport(
-        mailgunApiTransport({
-          apiKey: secrets.mailgun.password,
-          domain: secrets.mailgun.user
-        }));
+      var transporter = nodemailer.createTransport(mailgunApiTransport(secrets.mailgun));
+
       var mailOptions = {
         to: user.email,
         from: 'noreply@node-stripe-membership.herokuapp.com',
