@@ -5,8 +5,8 @@ module.exports = {
   sessionSecret: process.env.SESSION_SECRET || 'change this',
 
   mailgun: {
-    user: process.env.MAILGUN_USER || '',
-    password: process.env.MAILGUN_PASSWORD || ''
+    apiKey: process.env.MAILGUN_API_KEY || '',
+    domain: process.env.MAILGUN_DOMAIN || ''
   },
 
   stripeOptions: {
