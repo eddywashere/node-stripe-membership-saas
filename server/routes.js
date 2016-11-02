@@ -111,6 +111,11 @@ module.exports = function (app, passport) {
     isAuthenticated,
     users.deleteAccount);
 
+    app.get('/user/verify_email',
+    setRedirect({success: '/', failure: '/'}),
+     users.confirmEmail);
+
+
   // use this url to receive stripe webhook events
   app.post('/stripe/events',
     stripeWebhook.middleware,

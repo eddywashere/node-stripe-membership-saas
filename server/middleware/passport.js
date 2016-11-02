@@ -1,5 +1,7 @@
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/user');
+var crypto = require('crypto');
+var Email = require('./email');
 
 module.exports = function(passport){
 
@@ -58,16 +60,23 @@ module.exports = function(passport){
           // edit this portion to accept other properties when creating a user.
           var user = new User({
             email: req.body.email,
-            password: req.body.password // user schema pre save task hashes this password
+            password: req.body.password, // user schema pre save task hashes this password
+            emailConfirmToken: crypto.randomBytes(15).toString('hex')
           });
 
           user.save(function(err) {
-            if (err) return done(err, false, req.flash('error', 'Error saving user.'));
+            if (err) return done(err, false, req.flash('error', 'Sorry, but an error occured while saving. Try again later'));
             var time = 14 * 24 * 3600000;
             req.session.cookie.maxAge = time; //2 weeks
             req.session.cookie.expires = new Date(Date.now() + time);
             req.session.touch();
-            return done(null, user, req.flash('success', 'Thanks for signing up!!'));
+            Email.sendSignup(req, user, function (result) {
+              if(result) {
+                 return done(null, user, req.flash('success', 'Thank you, your account was created. Check your emails to confirm the signup.'));
+              } else {
+                 return done(null, false, req.flash('error', 'Sorry, but an error occured while creating the account. Try again later'));
+              }
+            })
           });
         });
       };

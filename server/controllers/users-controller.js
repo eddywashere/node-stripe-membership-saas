@@ -123,6 +123,49 @@ exports.postBilling = function(req, res, next){
     });
   });
 };
+exports.confirmEmail = function(req, res, next) {
+  var token = req.query.token;
+
+  if (!token) {
+    req.flash('errors', {
+      msg: 'Please check the URL, you didn\' provide any token to confirm your email adress'
+    });
+    return res.redirect(req.redirect.failure);
+
+  }
+
+  User.findOne({
+    emailConfirmToken: req.query.token
+  }, function(err, user) {
+
+    if (err || !user) {
+      req.flash('errors', {
+        msg: 'lease check the URL, you didn\' provide a valid token to confirm your email address'
+      });
+      return res.redirect(req.redirect.failure);
+    }
+
+    if (!user.emailConfirmed) {
+      user.emailConfirmed = true;
+      user.save(function(err) {
+        if (err) return next(err);
+        console.log(user.profile.website);
+
+        req.flash('success', {
+          msg: 'Thank you, you sucessfully confirmed your email address.'
+        });
+        res.redirect(req.redirect.success);
+      });
+
+    } else {
+      req.flash('errors', {
+        msg: 'Sorry, but the email address was already confirmed.'
+      });
+      return res.redirect(req.redirect.failure);
+    }
+
+  })
+};
 
 exports.postPlan = function(req, res, next){
   var plan = req.body.plan;
