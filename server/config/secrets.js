@@ -2,7 +2,7 @@ module.exports = {
 
   db: process.env.MONGODB || process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost:27017/stripe-membership',
 
-  sessionSecret: process.env.SESSION_SECRET || 'change this',
+  sessionSecret: process.env.SESSION_SECRET || 'THEDOGBARKSATNIGHTONLYIFITEATSOREOS',
 
   mailgun: {
     apiKey: process.env.MAILGUN_API_KEY || '',

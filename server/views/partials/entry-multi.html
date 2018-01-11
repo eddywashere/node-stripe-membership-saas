@@ -1,0 +1,191 @@
+
+{% if user.type == 'business' %}
+  {% set userData = user|json_encode %}
+  <script>
+    var userData = {{userData}}
+    var type = '{{ user.type }}';
+  </script>
+  
+  <div class="container-entry">
+    <div class="newPaymentFee row">
+      <div class="section-title">
+
+        <h2>Manage Payment Schedule</h2>
+        <p>Please enter in your payment fee schedule for your practice</p>
+
+        <h6 class="paymentType">
+          <form id="newFeeSchedule" method="post" action="/updateFeeSchedule">
+            <label>License Level
+              <select id="cred-list" name='cred'>
+                {% for item in cred %}
+                  <option selected={{ item.short == user.cred }}>
+                    {{ item.name }}
+                  </option>
+                {% endfor %}
+              </select>
+            </label>
+
+            <input type="hidden" name="_id" value={{ userData._id }} />
+            
+            <label>License Code</label>
+            <input type="text" name="licenseCode" />
+
+            <label>Insurance Name</label>
+            <input type="text" name="insuranceName" />
+
+            <label>Billable Amount</label>
+            <input type="text" name="billable" />
+
+            <input type="submit" value="save" />
+          </form>
+        </h6>
+      </div>
+    </div>
+  </div>
+            
+  <div class="blocks">
+    <p class="daily-log-title"></p>
+
+    <div class="block-container">
+      <div class="block">
+        <h4>License Level</h4>
+      </div>
+
+      <div class="block">
+        <h4>License Code</h4>
+      </div>
+
+      <div class="block">
+        <h4>Insurance Name</h4>
+      </div>
+
+      <div class="block">
+        <h4>Billable Amount</h4>
+      </div>
+    </div>
+
+    <div class="ledger-container">
+      <div class="ledger"></div>
+    </div>
+  </div>
+  
+  {% else %}
+  
+  <div class="container-entry">
+    <div class="newPayment row">
+      <div class="section-title">
+        <h2>Daily Entry</h2>
+        <p>Enter in your daily entries below. Logs will be saved to your individual client portals.</p>
+
+        <h6 class="paymentType">
+          <form id="newPaymentHome" method="post" action="/newPayment">
+            <a class="add-new-client" href="#">OR add new client</a>
+
+            <label>Client</label>
+            <select name="_id">
+
+            </select>
+
+            <label>Date of Service</label>
+            <input type="date" name="srvdate" />
+
+            <label>Insurance Name</label>
+            <input class="awesomplete" type="text" placeholder="Insurance Name" name="insuranceName" list="mylist" />
+            <datalist id="mylist">
+              <option>bcn</option>
+              <option>bcbs</option>
+              <option>hap</option>
+              <option>priority_health</option>
+              <option>cofinity</option>
+              <option>medicare</option>
+              <option>medicade</option>
+            </datalist>
+
+            <label>Service Code</label>
+              {% if userData.practice not 'Select a Practice' %}
+                <select name="serviceCode">
+                  <option value='Select a Licence Code'>
+                    // unique = {};
+                    // distinct = [];
+                    {% if typeof(practices[0]) not 'undefined' %}
+                      {% for item in practices.fee %}
+                        {% if item.licenseLevel == user.cred %}
+                          // distinct.push(item.licenseCode);
+                          {% if not unique[item.licenseCode] %}
+                            // unique[item.licenseCode] = true;
+                            <option value={{ item.licenseValue }}>
+                              {{ item.licenseCode }}
+                            </option>
+                          {% endif %}
+                        {% endif %}
+                      {% endfor %}
+                    {% endif %}
+                  </option>
+                </select>
+              {% else %}
+
+                <input type="text" name="serviceCode" placeholder="Enter Insurance Code" />
+
+                <label>Insurance Billed</label>
+                <input name="insuranceBilledAmount" type="text" placeholder="Insurance Billed Amount" value="0" />
+
+                <label>Insurance Paid</label>
+                <input name="insurancePaymentAmount" type="text" placeholder="Insurance Paid Amount" value="0" />
+
+                <label>Client Paid</label>
+                <input name="clientPaymentAmount" type="text" placeholder="Client Paid Amount" value="0" />
+
+                <input type="submit" value="save" />
+
+              {% endif %}
+          </form>
+        </h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="blocks">
+    <p class="daily-log-title"></p>
+
+    {% if newDate %}
+      <h2>Daily Log for {{% moment(newData).format('MM-DD-YYYY')%}}</h2>
+    {% else %}
+      <h2>Daily Log for {{% moment(todaysDate).format('MM-DD-YYYY')%}}</h2>
+    {% endif %}
+
+    <div class="block-container">
+      <div class="block">
+        <h4>Name</h4>
+      </div>
+
+      <div class="block">
+        <h4>Date of Service</h4>
+      </div>
+
+      <div class="block">
+        <h4>Insurance</h4>
+      </div>
+
+      <div class="block">
+        <h4>Insurance Billed</h4>
+      </div>
+
+      <div class="block">
+        <h4>Insurance Paid</h4>
+      </div>
+
+      <div class="block">
+        <h4>Balance</h4>
+      </div>
+    </div>
+
+    <div class="ledger-container">
+      <div class="ledger">
+
+      </div>
+    </div>
+
+    <div class="signed">
+      <p>Signature and Date</p>
+    </div>
+  </div>

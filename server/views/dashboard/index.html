@@ -3,70 +3,12 @@
 {% block title %}{{title}}{% endblock %}
 
 {% block content %}
-  <div class="container-fluid container-max">
-    <div class="page-header">
-      <h1>Home <small>/views/dashboard/index</small></h1>
-    </div>
     {% include "../partials/flash.html" %}
-    {% if user.stripe.plan == 'free' %}
-    <div class="panel panel-default">
-      <div class="panel-heading">Free Plan</div>
-      <div class="panel-body">
-        <p>Thanks for subscribing to the free plan! Enjoy this free content!</p>
+    <div class="landing">
+      <div class="inner">
+        <div class="extend">
+          {% include "../partials/entry-multi.html" %}
+        </div>
       </div>
     </div>
-    {% else %}
-    <div class="panel panel-default">
-      <div class="panel-heading">Free Plan (<a href="/billing">Change to this plan</a>)</div>
-    </div>
-    {% endif %}
-
-    {% if user.stripe.plan == 'silver' %}
-    <div class="panel panel-default">
-      <div class="panel-heading">Silver Plan</div>
-      <div class="panel-body">
-        <p>Thanks for subscribing to the silver plan!</p>
-      </div>
-    </div>
-    {% else %}
-    <div class="panel panel-default">
-      <div class="panel-heading">Silver Plan (<a href="/billing">Change to this plan</a>)</div>
-    </div>
-    {% endif %}
-
-    {% if user.stripe.plan == 'gold' %}
-    <div class="panel panel-default">
-      <div class="panel-heading">Gold Plan</div>
-      <div class="panel-body">
-        <p>Thanks for subscribing to the gold plan!</p>
-      </div>
-    </div>
-    {% else %}
-    <div class="panel panel-default">
-      <div class="panel-heading">Gold Plan (<a href="/billing">Change to this plan</a>)</div>
-    </div>
-    {% endif %}
-
-    {% if user.stripe.plan == 'platinum' %}
-    <div class="panel panel-default">
-      <div class="panel-heading">Platinum Plan</div>
-      <div class="panel-body">
-        <p>Thanks for subscribing to the platinum plan!</p>
-      </div>
-    </div>
-    {% else %}
-    <div class="panel panel-default">
-      <div class="panel-heading">Platinum Plan (<a href="/billing">Change to this plan</a>)</div>
-    </div>
-    {% endif %}
-
-    <div class="well">
-      <p>Debug Info:</p>
-      <ul>
-        <li>Does this user have a plan? {% if _.has(plans, user.stripe.plan) %}YES{% else %}NOPE{% endif %}</li>
-        <li>Does this user have paid plan? {% if _.contains(['silver','gold','platinum'], user.stripe.plan) %}YES{% else %}NOPE{% endif %}</li>
-      </ul>
-    </div>
-  </div>
-</div>
 {% endblock %}
