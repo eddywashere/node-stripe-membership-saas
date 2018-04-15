@@ -1,6 +1,6 @@
 module.exports = {
 
-  db: process.env.MONGODB || process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost:27017/stripe-membership',
+  db: process.env.MONGODB_URI || process.env.MONGODB || process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost:27017/stripe-membership',
 
   sessionSecret: process.env.SESSION_SECRET || 'change this',
 
