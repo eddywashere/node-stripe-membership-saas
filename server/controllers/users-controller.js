@@ -128,10 +128,6 @@ exports.postPlan = function(req, res, next){
   var plan = req.body.plan;
   var stripeToken = null;
 
-  if(plan){
-    plan = plan.toLowerCase();
-  }
-
   if(req.user.stripe.plan == plan){
     req.flash('info', {msg: 'The selected plan is the same as the current plan.'});
     return res.redirect(req.redirect.success);
