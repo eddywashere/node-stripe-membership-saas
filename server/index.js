@@ -1,5 +1,5 @@
 'use strict';
-
+require('dotenv').config();
 var express = require('express');
 var swig = require('swig');
 var subdomainOffset = process.env.SUBDOMAIN_OFFSET || 0;
